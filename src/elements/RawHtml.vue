@@ -7,11 +7,7 @@ let contentEditComponent = {
 
     template: `
     <div>
-    <editor-tinymce 
-        :id="'editor-tinymce' + property.name"
-        :other_options="editorOptions"
-        v-model="value">
-    </editor-tinymce>
+    <codemirror :options="options" maxlength="200" type="textarea" v-model="value"></codemirror>
     </div>
     `,
 
@@ -23,9 +19,9 @@ let contentEditComponent = {
     data() {
         return {
             value: '',
-            editorOptions: {
-                menubar: false,
-                branding: false
+            options: {
+                mode: 'htmlmixed',
+                lineNumbers: true
             }
         };
     },
@@ -36,10 +32,6 @@ let contentEditComponent = {
         }, 0);
     }
 };
-
-/*
-"formatselect | bold italic  strikethrough  forecolor backcolor | link | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat"
-*/
 
 export default {
     name: 'raw-html',

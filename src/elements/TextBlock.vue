@@ -7,11 +7,21 @@ let contentEditComponent = {
 
     template: `
     <div>
+    <b-tabs @input="refreshCodeEditor" type="is-toggle is-small" position="is-centered" class="block">
+
+    <b-tab-item label="HTML">
     <editor-tinymce 
         :id="'editor-tinymce' + property.name"
-        :other_options="editorOptions"
+        :other_options="tinyOptions"
         v-model="value">
     </editor-tinymce>
+    </b-tab-item>
+    
+    <b-tab-item label="Code">
+    <codemirror ref="codeEditor" :options="codeOptions" maxlength="200" type="textarea" v-model="value"></codemirror>
+    </b-tab-item>
+
+    </b-tabs>
     </div>
     `,
 
@@ -23,11 +33,24 @@ let contentEditComponent = {
     data() {
         return {
             value: '',
-            editorOptions: {
+            showCode: false,
+            tinyOptions: {
                 menubar: false,
                 branding: false
+            },
+            codeOptions: {
+                mode: 'htmlmixed',
+                lineNumbers: true
             }
         };
+    },
+
+    methods: {
+        refreshCodeEditor(idx) {
+            setTimeout(() => {
+                this.$refs.codeEditor.editor.refresh();
+            }, 0);
+        }
     },
 
     mounted() {
@@ -85,5 +108,3 @@ export default {
     }
 };
 </script>
-<style>
-</style>

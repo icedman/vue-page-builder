@@ -7,6 +7,13 @@ import Buefy from 'buefy';
 Vue.use(Buefy);
 Vue.component('editor-tinymce', TinymceVue.default);
 
+import { codemirror } from 'vue-codemirror-lite';
+Vue.component('codemirror', codemirror);
+require('codemirror/mode/htmlmixed/htmlmixed');
+require('codemirror/mode/css/css');
+
+window.cm = codemirror;
+
 Vue.prototype.$tree = Tree;
 
 // elements
@@ -15,6 +22,7 @@ Vue.prototype.$registerElement = component => {
     Vue.prototype.$elements[component.name] = component;
     Vue.component(component.name, component);
 };
+
 import AddElement from './elements/AddElement';
 import RawHTML from './elements/RawHTML';
 import TextBlock from './elements/TextBlock';

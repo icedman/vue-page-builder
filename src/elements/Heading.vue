@@ -21,14 +21,19 @@ export default {
                 name: 'tag',
                 title: 'Tag',
                 section: 'content',
-                component: 'form-control-text'  
+                options: [
+                    { name: 'H1', value: 'h1' },
+                    { name: 'H2', value: 'h2' },
+                    { name: 'H3', value: 'h3' },
+                    { name: 'H4', value: 'h4' }
+                ],
+                component: 'form-control-select'  
             }
         ]
     },
 
     data() {
         return {
-            tag: 'h2'
         };
     },
 
@@ -37,6 +42,13 @@ export default {
     },
 
     computed: {
+        tag () {
+            if (this.node && this.node.data) {
+                return this.node.data.tag || 'h2';
+            }
+            return 'h2';
+        },
+
         content() {
             if (this.node && this.node.data) {
                 return this.node.data.content || '';
@@ -60,8 +72,6 @@ export default {
                 value: 'h2'
             });
         }
-
-        this.tag = this.node.data.tag;
     }
 };
 </script>

@@ -5,8 +5,8 @@
             <div style="flex:1"><h2><p class="modal-card-title">{{title}}</p></h2></div>
             <!-- <a @click="close()"><i class="fa fa-times"></i></a> -->
         </header>
-        <section class="modal-card-body modal-editor-body">
-        <b-tabs class="block" v-model="activeTab">
+        <section class="modal-card-body modal-editor-body" style="min-height: 60vh">
+        <b-tabs class="block" v-model="activeTab" @input="refreshControls">
             <b-tab-item v-for="(t, index) in sections" 
                 v-bind:key="index"
                 :label="t.title"
@@ -43,7 +43,15 @@
 </template>
 <script>
 import Vue from 'vue';
-import { Checkbox, Switch, InputNumber, InputText, InputBox } from './controls/';
+import { 
+    Checkbox,
+    Switch,
+    InputNumber,
+    InputText,
+    InputBox,
+    Select,
+    CodeMirror
+} from './controls/';
 import UIDefs from './UIDefs.js';
 export default {
     data() {
@@ -66,6 +74,18 @@ export default {
     },
 
     methods: {
+
+        refreshControls () {
+            setTimeout(() => {
+                Object.keys(this.$refs).forEach(k => {
+                    var ref = this.$refs[k][0];
+                    if (ref.refresh) {
+                        ref.refresh();
+                    }
+                });
+            }, 0);
+        },
+
         save() {
             var data = Object.assign(this.node.data);
             Object.keys(this.$refs).forEach(k => {
@@ -184,6 +204,8 @@ export default {
         'form-control-number': InputNumber,
         'form-control-text': InputText,
         'form-control-box': InputBox,
+        'form-control-select': Select,
+        'form-control-code': CodeMirror,
     }
 };
 </script>

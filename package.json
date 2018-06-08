@@ -14,6 +14,7 @@
     "buefy": "^0.6.5",
     "hljs": "^6.2.3",
     "vue": "^2.5.11",
+    "vue-codemirror-lite": "^1.0.4",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1"
   },

@@ -24,6 +24,13 @@ export default {
             component: 'form-control-text'
         },
         {
+            name: 'css',
+            title: 'Custom CSS',
+            section: 'general',
+            component: 'form-control-code',
+            mode: 'css',
+        },
+        {
             name: 'row',
             title: 'Orientation',
             section: 'layout',
