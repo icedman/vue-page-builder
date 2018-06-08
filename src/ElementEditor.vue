@@ -172,7 +172,7 @@ export default {
         var hasSomeVisibleTabs = false;
         var defaultTab = '';
         this.properties.forEach(p => {
-            if (p.default) {
+            if (p.name === 'content') {
                 defaultTab = p.section;
             }
             var tab = this.tabs[p.section];

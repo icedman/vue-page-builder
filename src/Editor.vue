@@ -4,18 +4,20 @@
 
       <div id="root" :class="getEditorClass">
 
-        <component :is="'tree-node'" :node="root" xxstyle="border:0px"></component>
+        <component :is="'tree-node'" :node="root" style="border:0px"></component>
         
     <div class="container" 
-      style="padding:40px; text-align: center; border-top: 1px dashed #a0a0a0">
+      style="margin: auto; margin-top: 40px; padding:40px; text-align: center; border-top: 1px dashed #a0a0a0">
       <a class="add-button" @click="addColumn(0)"><img src="static/icons/1-column.svg"/></a>
       <a class="add-button" @click="addColumn(2)"><img src="static/icons/2-column.svg"/></a>
       <a class="add-button" @click="addColumn(3)"><img src="static/icons/3-column.svg"/></a>
       <a class="add-button" @click="addColumn(4)"><img src="static/icons/4-column.svg"/></a>
       <a class="add-button" @click="addColumn(5)"><img src="static/icons/5-column.svg"/></a>
       <a class="add-button" @click="addTextBlock()"><img src="static/icons/text-block.svg"/></a>
+      <!-- 
       <a class="add-button" @click="addColumn(5)"><img src="static/icons/element.svg"/></a>
       <a class="add-button" @click="addColumn(5)"><img src="static/icons/custom.svg"/></a>
+       -->
     </div>
 
     <!--
@@ -96,7 +98,7 @@ export default {
         addTextBlock() {
             var target = this.$store.state.tree.root;
             var row = this.$tree.createNode();
-            row.data = { flex: 1, element: 'raw-html' };
+            row.data = { flex: 1, element: 'text-block' };
             this.$store.commit('tree/appendChild', {
                 target: target,
                 child: row
@@ -152,5 +154,8 @@ img {
 }
 #tinymce {
     display: none;
+}
+* .tooltip {
+    z-index: 100;
 }
 </style>

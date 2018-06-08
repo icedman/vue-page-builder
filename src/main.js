@@ -12,11 +12,11 @@ Vue.component('codemirror', codemirror);
 require('codemirror/mode/htmlmixed/htmlmixed');
 require('codemirror/mode/css/css');
 
-window.cm = codemirror;
-
 Vue.prototype.$tree = Tree;
 
-// elements
+//--------------
+// basic elements
+//--------------
 Vue.prototype.$elements = {};
 Vue.prototype.$registerElement = component => {
     Vue.prototype.$elements[component.name] = component;
@@ -27,11 +27,15 @@ import AddElement from './elements/AddElement';
 import RawHTML from './elements/RawHTML';
 import TextBlock from './elements/TextBlock';
 import Heading from './elements/Heading';
+import Image from './elements/Image';
+import Button from './elements/Button';
 
 Vue.prototype.$registerElement(AddElement);
 Vue.prototype.$registerElement(RawHTML);
 Vue.prototype.$registerElement(TextBlock);
 Vue.prototype.$registerElement(Heading);
+Vue.prototype.$registerElement(Image);
+Vue.prototype.$registerElement(Button);
 
 new Vue({
     el: '#app',

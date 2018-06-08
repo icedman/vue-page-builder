@@ -288,6 +288,6 @@ table.box-sizing input {
     min-height: 40px;
     min-width: 40px;
     opacity: 0;
-    z-index: 0;
+    /*z-index: 0;*/
 }
 </style>

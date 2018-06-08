@@ -1,6 +1,7 @@
 <template>
     <div class="node" :id="getId()"
         :class="getContainerClass()"
+        :style="getContainerStyle()"
         :draggable="draggable"
         @dragover="canDrop($event, node)"
         @drop="drop($event, node)"
@@ -15,7 +16,6 @@
         </tree-node>
 
         <!-- div class="dropTargetPlaceholder" v-if="showDropTargetPlaceholder"></div -->
-
     </div>
 </template>
 <script>
@@ -33,14 +33,14 @@ export default {
     },
 
     computed: {
-        children() {
+        children () {
             if (!this.node) {
                 return [];
             }
             return this.node.children;
         },
 
-        showDropTargetPlaceholder() {
+        showDropTargetPlaceholder () {
             if (!this.node || !this.$store.state.tree.drop) {
                 return false;
             }
@@ -50,7 +50,7 @@ export default {
             return false;
         },
 
-        nodeElement() {
+        nodeElement () {
             if (!this.node || !this.node.parent || !this.node.parent()) {
                 return '';
             }
@@ -69,14 +69,14 @@ export default {
     },
 
     methods: {
-        canDrop(event, target) {
+        canDrop (event, target) {
             // can drop?
             event.preventDefault();
             event.stopPropagation();
             this.$store.commit('tree/setDrop', target);
         },
 
-        drop(event, target) {
+        drop (event, target) {
             event.preventDefault();
             event.stopPropagation();
             var dragItem = this.$store.state.tree.drag;
@@ -152,7 +152,7 @@ export default {
             this.$store.dispatch('tree/flash', dragItem);
         },
 
-        dragStart(event, target) {
+        dragStart (event, target) {
             var img = new Image();
             img.src = 'static/icons/1-column.svg';
 
@@ -167,14 +167,14 @@ export default {
             event.dataTransfer.setDragImage(img, 10, 10);
         },
 
-        drag(event, target) {
+        drag (event, target) {
             event.preventDefault();
             event.stopPropagation();
 
             this.$store.commit('tree/setDrag', target);
         },
 
-        dragEnd(event, target) {
+        dragEnd (event, target) {
             event.preventDefault();
             event.stopPropagation();
             this.$store.commit('tree/setDrag', null);
@@ -184,13 +184,13 @@ export default {
             }, 500);
         },
 
-        select(event, target) {
+        select (event, target) {
             event.preventDefault();
             event.stopPropagation();
             this._select(this, target);
         },
 
-        hover(event, target) {
+        hover (event, target) {
             event.preventDefault();
             event.stopPropagation();
 
@@ -224,22 +224,23 @@ export default {
             self.$store.commit('tree/setSelected', target);
         }, 120),
 
-        getId() {
+        getId () {
             if (this.node && this.node.id) {
                 return `node-${this.node.id}`;
             }
             return '';
         },
 
-        getContainerClass() {
-            var node = this.node;
+        getContainerClass () {
             var classes = [];
+            var node = this.node;
             if (node && node.data) {
                 if (node.data.row) {
-                    // classes.push('flex-row');
                     classes.push('columns');
-                } else {
-                    // classes.push('container');
+                }
+                if (node.data.className) {
+                    var cls = node.data.className.split(',');
+                    classes = [ ...classes, ...cls];
                 }
                 if (node.data.flex) {
                     // classes.push('flex-' + node.data.flex);
@@ -274,23 +275,42 @@ export default {
                 this._clearFlash(this);
             }
             return classes;
+        },
+
+        getContainerStyle () {
+            var styles = [];
+            var node = this.node;
+            if (node && node.data) {
+                if (node.data.box) {
+                    Object.keys(node.data.box).forEach(k => {
+                        if (!node.data.box[k]) {
+                            return;
+                        }
+                        var style = {};
+                        style[k] = node.data.box[k];
+                        styles.push(style);
+                    });
+                }
+            }
+
+            return styles;
         }
     },
 
-    mounted() {}
+    mounted () {}
 };
 </script>
 <style lang="scss">
 $borderSize: 2px;
 $borderStyle: dotted;
 .node {
-    border: $borderSize $borderStyle rgba(50, 50, 50, 0.05);
+    border: $borderSize $borderStyle rgba(50, 50, 50, 0.15);
+    box-sizing: border-box;
     min-width: 80px;
     min-height: 80px;
-    box-sizing: border-box;
     padding: 10px;
-    transition: border-color 250ms;
     margin: 4px;
+    transition: border-color 250ms;
     /*margin-bottom: 10px;*/
 }
 
@@ -355,8 +375,8 @@ $borderStyle: dotted;
 }
 .dropTargetPlaceholder {
     flex: 1;
-    border: 2px solid #f0f0f0;
-    background: #f0f0f0;
+    border: 2px solid #e0e0e0;
+    background: #e0e0e0;
     margin: 4px;
 }
 * .flash {

@@ -42,8 +42,8 @@ export default {
         properties: [
             {
                 name: 'content',
-                default: true,
                 section: 'content',
+                default: '<b>Raw Html</b><p>Lorem Ipsum</p>',
                 component: contentEditComponent
             }
         ]
@@ -67,13 +67,6 @@ export default {
     },
 
     mounted() {
-        if (!this.node.data.content) {
-            this.$store.commit('tree/setData', {
-                target: this.node,
-                key: 'content',
-                value: '<b>Raw Html</b><p>Lorem Ipsum</p>'
-            });
-        }
     }
 };
 </script>

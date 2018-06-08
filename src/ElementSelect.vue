@@ -54,6 +54,32 @@ export default {
     },
 
     methods: {
+
+        getElementDefaults (element) {
+            var res = {
+                element: element.name,
+                flex: 1
+            };
+
+            // element properties
+            var elementDef = this.$elements[element.name];
+            if (!elementDef || !elementDef.element || !elementDef.element.properties) {
+                return res;
+            }
+
+            // grab defaults
+            Object.keys(elementDef.element.properties).forEach(k => {
+                var prop = elementDef.element.properties[k];
+                if (prop.default) {
+                    res[prop.name] = prop.default;
+                } else {
+                    res[prop.name] = '';
+                }
+            });
+
+            return res;
+        },
+
         select(element) {
             var active = this.$store.state.tree.selected;
             if (!active) {
@@ -63,8 +89,7 @@ export default {
 
             this.$store.commit('tree/setData', {
                 target: active,
-                key: 'element',
-                value: element.name
+                data: this.getElementDefaults(element)
             });
 
             this.$store.dispatch('tree/flash', active);
@@ -92,10 +117,8 @@ export default {
             event.stopPropagation();
 
             var node = this.$tree.createNode();
-            node.data = {
-                flex: 1,
-                element: target.name
-            }
+            node.data = this.getElementDefaults({ name: target.name });
+
             this.$store.commit('tree/setDrag', node);
         },
 

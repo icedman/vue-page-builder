@@ -1,5 +1,5 @@
 <template>
-    <component :is="tag">{{content}}</component>
+    <component :is="tag" :class="getHeadingClass()">{{content}}</component>
 </template>
 <script>
 
@@ -12,15 +12,16 @@ export default {
         properties: [
             {
                 name: 'content',
-                default: true, // default section
                 section: 'content',
                 title: 'Heading',
+                default: 'This is a heading.',
                 component: 'form-control-text'
             },
             {
                 name: 'tag',
                 title: 'Tag',
                 section: 'content',
+                default: 'h2',
                 options: [
                     { name: 'H1', value: 'h1' },
                     { name: 'H2', value: 'h2' },
@@ -50,33 +51,34 @@ export default {
         },
 
         content() {
-            if (this.node && this.node.data) {
-                return this.node.data.content || '';
+            if (this.node && this.node.data && this.node.data.content) {
+                return this.node.data.content;
             }
             return '';
         }
     },
 
+    methods: {
+
+        getHeadingClass () {
+            switch (this.tag) {
+                case 'h1':
+                    return [ 'title', 'is-1' ];
+                case 'h2':
+                    return [ 'title', 'is-2' ];
+                case 'h3':
+                    return [ 'title', 'is-3' ];
+                case 'h4':
+                    return [ 'title', 'is-4' ];
+            }
+            return [ 'title', 'is-2' ];
+        },
+
+    },
+
     mounted() {
-        if (!this.node.data.content) {
-            this.$store.commit('tree/setData', {
-                target: this.node,
-                key: 'content',
-                value: 'This is a heading'
-            });
-        }
-        if (!this.node.data.tag) {
-            this.$store.commit('tree/setData', {
-                target: this.node,
-                key: 'tag',
-                value: 'h2'
-            });
-        }
     }
 };
 </script>
 <style>
-h2 {
-    font-size: 18pt;
-}
 </style>

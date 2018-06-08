@@ -77,7 +77,6 @@ let mutations = {
 
     setSelected(state, component) {
         state.selected = component;
-        state.live = false;
     },
 
     setHovered(state, component) {

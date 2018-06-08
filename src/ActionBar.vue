@@ -300,6 +300,7 @@ $toolbarColor: black;
     background-color: $toolbarColor;
     border-radius: 8px;
     padding: 0px;
+    z-index: 1;
 }
 .add-bar-container {
     position: absolute;
@@ -308,6 +309,7 @@ $toolbarColor: black;
     transition: opacity 1000ms;
     text-align: center;
     pointer-events: none;
+    z-index: 1;
 }
 .add-bar {
     display: inline-block;
