@@ -153,8 +153,9 @@ export default {
         },
 
         dragStart (event, target) {
-            var img = new Image();
-            img.src = 'static/icons/1-column.svg';
+            // var img = new Image();
+            var img = document.getElementById("dragImage");
+            // img.src = 'static/icons/1-column.svg';
 
             /*
             var img = document.getElementById("dragCanvas");
