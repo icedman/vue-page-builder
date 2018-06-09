@@ -1,5 +1,5 @@
 <template>
-<nav class="navbar is-secondary has-shadow">
+<nav class="navbar is-secondary has-shadow" style="z-index:1">
   <div class="navbar-brand">
 
     <div class="navbar-burger burger is-hoverable" :class="menuActiveClass" data-target="navMenuToggled" @click="toggleMenu($event)">
