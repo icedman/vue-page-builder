@@ -1,5 +1,5 @@
 <template>
-<div>
+<div ref="actionBox">
 
     <!-- action bar -->
     <div class="action-bar no-select action-bar-visible" :style="getActionBarPosition()">
@@ -285,6 +285,9 @@ export default {
                 // canCancel: 'x'
             });
         }
+    },
+
+    mounted () {
     },
 
     components: {

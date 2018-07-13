@@ -153,17 +153,14 @@ export default {
         },
 
         dragStart (event, target) {
-            // var img = new Image();
-            var img = document.getElementById("dragImage");
+            // var img = document.getElementById("dragImage");
             // img.src = 'static/icons/1-column.svg';
 
-            /*
             var img = document.getElementById("dragCanvas");
             var ctx = img.getContext("2d");
-            ctx.rect(4,4,112,52);
-            ctx.stroke();
+            // ctx.rect(4,4,112,52);
+            // ctx.stroke();
             img.style.display = "block";
-            */
 
             event.dataTransfer.setDragImage(img, 10, 10);
         },
@@ -171,7 +168,6 @@ export default {
         drag (event, target) {
             event.preventDefault();
             event.stopPropagation();
-
             this.$store.commit('tree/setDrag', target);
         },
 

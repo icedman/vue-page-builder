@@ -20,10 +20,9 @@
        -->
     </div>
 
-    <!--
+    
     <canvas id="dragCanvas" width="120px" height="60px" style="position: absolute; top:-100px; left:-100px"></canvas>
-    -->
-
+    
     <img id="dragImage" style="position: absolute; top:-100px; left:-100px"
         src="static/icons/1-column.svg"
         />
