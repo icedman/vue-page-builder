@@ -1,16 +1,16 @@
-import Vue from 'vue';
-import Vuex from 'vuex';
+import Vue from 'vue'
+import Vuex from 'vuex'
 
-import tree from './tree';
+import tree from './tree'
 
-Vue.use(Vuex);
+Vue.use(Vuex)
 
 export default new Vuex.Store({
-    state: {},
-    getters: {},
-    actions: {},
-    mutations: {},
-    modules: {
-        [tree.name]: tree
-    }
-});
+  state: {},
+  getters: {},
+  actions: {},
+  mutations: {},
+  modules: {
+    [tree.name]: tree
+  }
+})

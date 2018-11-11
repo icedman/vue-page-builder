@@ -1,33 +1,33 @@
 <template>
-    <div id="app">        
+  <div id="app">
 
-        <nav-bar></nav-bar>
-        <editor></editor>
-    </div>
+    <nav-bar></nav-bar>
+    <editor></editor>
+  </div>
 </template>
 
 <script>
-import Editor from './Editor';
-import Navbar from './Navbar';
+import Editor from './Editor'
+import Navbar from './Navbar'
 
 export default {
-    name: 'app',
+  name: 'app',
 
-    data() {
-        return {};
-    },
+  data () {
+    return {}
+  },
 
-    computed: {},
+  computed: {},
 
-    methods: {},
+  methods: {},
 
-    mounted() {},
+  mounted () {},
 
-    components: {
-        editor: Editor,
-        'nav-bar': Navbar
-    }
-};
+  components: {
+    editor: Editor,
+    'nav-bar': Navbar
+  }
+}
 </script>
 
 <style>

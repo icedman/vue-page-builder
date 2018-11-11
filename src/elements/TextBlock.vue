@@ -1,11 +1,11 @@
 <template>
-    <div v-html="content"></div>
+  <div v-html="content"></div>
 </template>
 <script>
 let contentEditComponent = {
-    name: 'text-block-editor',
+  name: 'text-block-editor',
 
-    template: `
+  template: `
     <div>
     <b-tabs @input="refreshCodeEditor" type="is-toggle is-small" position="is-centered" class="block">
 
@@ -25,79 +25,78 @@ let contentEditComponent = {
     </div>
     `,
 
-    props: {
-        node: Object,
-        property: Object
-    },
+  props: {
+    node: Object,
+    property: Object
+  },
 
-    data() {
-        return {
-            value: '',
-            showCode: false,
-            tinyOptions: {
-                menubar: false,
-                branding: false
-            },
-            codeOptions: {
-                mode: 'htmlmixed',
-                lineNumbers: true
-            }
-        };
-    },
-
-    methods: {
-        refreshCodeEditor(idx) {
-            setTimeout(() => {
-                this.$refs.codeEditor.editor.refresh();
-            }, 0);
-        }
-    },
-
-    mounted() {
-        setTimeout(() => {
-            this.value = this.node.data[this.property.name];
-        }, 0);
+  data () {
+    return {
+      value: '',
+      showCode: false,
+      tinyOptions: {
+        menubar: false,
+        branding: false
+      },
+      codeOptions: {
+        mode: 'htmlmixed',
+        lineNumbers: true
+      }
     }
-};
+  },
+
+  methods: {
+    refreshCodeEditor (idx) {
+      setTimeout(() => {
+        this.$refs.codeEditor.editor.refresh()
+      }, 0)
+    }
+  },
+
+  mounted () {
+    setTimeout(() => {
+      this.value = this.node.data[this.property.name]
+    }, 0)
+  }
+}
 
 /*
-"formatselect | bold italic  strikethrough  forecolor backcolor | link | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat"
-*/
+  "formatselect | bold italic  strikethrough  forecolor backcolor | link | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat"
+  */
 
 export default {
-    name: 'text-block',
+  name: 'text-block',
 
-    element: {
-        title: 'Text Block',
+  element: {
+    title: 'Text Block',
 
-        properties: [
-            {
-                name: 'content',
-                section: 'content',
-                default: '<b>Text Block</b><p>Lorem Ipsum</p>',
-                component: contentEditComponent
-            }
-        ]
-    },
+    properties: [
+      {
+        name: 'content',
+        section: 'content',
+        default: '<b>Text Block</b><p>Lorem Ipsum</p>',
+        component: contentEditComponent
+      }
+    ]
+  },
 
-    data() {
-        return {};
-    },
+  data () {
+    return {}
+  },
 
-    props: {
-        node: Object
-    },
+  props: {
+    node: Object
+  },
 
-    computed: {
-        content() {
-            if (this.node && this.node.data) {
-                return this.node.data.content || '';
-            }
-            return '';
-        }
-    },
-
-    mounted() {
+  computed: {
+    content () {
+      if (this.node && this.node.data) {
+        return this.node.data.content || ''
+      }
+      return ''
     }
-};
+  },
+
+  mounted () {}
+}
 </script>
