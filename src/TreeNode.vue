@@ -200,7 +200,7 @@ export default {
         ) {
           this.$store.commit('tree/setSelected', this.node)
         }
-      }, 800)
+      }, 200)
     },
 
     _clearFlash: _.debounce(self => {

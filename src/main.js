@@ -2,20 +2,19 @@ import Vue from 'vue'
 import App from './App.vue'
 import Store from './stores'
 import Tree from './libs/tree.js'
-
 import Buefy from 'buefy'
-
-import { codemirror } from 'vue-codemirror-lite'
-
 import AddElement from './elements/AddElement'
 import RawHTML from './elements/RawHTML'
 import TextBlock from './elements/TextBlock'
 import Heading from './elements/Heading'
 import Image from './elements/Image'
 import Button from './elements/Button'
+import { codemirror } from 'vue-codemirror-lite'
+
 Vue.use(Buefy)
 Vue.component('editor-tinymce', TinymceVue.default)
 Vue.component('codemirror', codemirror)
+
 require('codemirror/mode/htmlmixed/htmlmixed')
 require('codemirror/mode/css/css')
 
