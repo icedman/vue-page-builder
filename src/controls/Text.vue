@@ -2,7 +2,7 @@
   <div class="form-field">
     <div class="label form-label">{{property.title}}</div>
     <div class="form-control">
-      <b-input type="text" :placeholder="property.placeholder" v-model="value">
+      <b-input type="text" :placeholder="property.placeholder" v-model="target" @input="$emit('input', target)">
       </b-input>
     </div>
   </div>
@@ -13,18 +13,14 @@ export default {
   name: 'form-control-text',
 
   props: {
-    node: Object,
+    value: String,
     property: Object
   },
 
   data () {
     return {
-      value: ''
+      target: this.value
     }
-  },
-
-  mounted () {
-    this.value = this.node.data[this.property.name]
   }
 }
 </script>

@@ -14,7 +14,7 @@
             <td class="spacer"> # </td>
             <td> <span class="box-title">margin</span> </td>
             <td>
-              <input v-mask-box class="input" type="text" v-model="value.marginTop" placeholder="-" />
+              <input v-mask-box class="input" type="text" v-model="target.marginTop" placeholder="-" />
             </td>
             <td class="spacer"> # </td>
             <td class="spacer"> # </td>
@@ -28,7 +28,7 @@
             <td class="spacer"> # </td>
             <td> <span class="box-title">border</span> </td>
             <td>
-              <input v-mask-box class="input" type="text" v-model="value.borderTop" placeholder="-" />
+              <input v-mask-box class="input" type="text" v-model="target.borderTop" placeholder="-" />
             </td>
             <td class="spacer"> # </td>
             <td class="spacer"> # </td>
@@ -42,7 +42,7 @@
             <td class="spacer"> # </td>
             <td> <span class="box-title">padding</span> </td>
             <td>
-              <input v-mask-box class="input" type="text" v-model="value.paddingTop" placeholder="-" />
+              <input v-mask-box class="input" type="text" v-model="target.paddingTop" placeholder="-" />
             </td>
             <td class="spacer"> # </td>
             <td class="spacer"> # </td>
@@ -53,23 +53,23 @@
           <tr>
 
             <td>
-              <input v-mask-box class="input" type="text" v-model="value.marginLeft" placeholder="-" />
+              <input v-mask-box class="input" type="text" v-model="target.marginLeft" placeholder="-" />
             </td>
             <td>
-              <input v-mask-box class="input" type="text" v-model="value.borderLeft" placeholder="-" />
+              <input v-mask-box class="input" type="text" v-model="target.borderLeft" placeholder="-" />
             </td>
             <td>
-              <input v-mask-box class="input" type="text" v-model="value.paddingLeft" placeholder="-" />
+              <input v-mask-box class="input" type="text" v-model="target.paddingLeft" placeholder="-" />
             </td>
             <td> <img src="/static/icons/custom.svg" /> </td>
             <td>
-              <input v-mask-box class="input" type="text" v-model="value.paddingRight" placeholder="-" />
+              <input v-mask-box class="input" type="text" v-model="target.paddingRight" placeholder="-" />
             </td>
             <td>
-              <input v-mask-box class="input" type="text" v-model="value.borderRight" placeholder="-" />
+              <input v-mask-box class="input" type="text" v-model="target.borderRight" placeholder="-" />
             </td>
             <td>
-              <input v-mask-box class="input" type="text" v-model="value.marginRight" placeholder="-" />
+              <input v-mask-box class="input" type="text" v-model="target.marginRight" placeholder="-" />
             </td>
 
           </tr>
@@ -80,21 +80,7 @@
             <td class="spacer"> # </td>
             <td class="spacer"> # </td>
             <td>
-              <input v-mask-box class="input" type="text" v-model="value.paddingBottom" placeholder="-" />
-            </td>
-            <td class="spacer"> # </td>
-            <td class="spacer"> # </td>
-            <td class="spacer"> # </td>
-
-          </tr>
-
-          <tr>
-
-            <td class="spacer"> # </td>
-            <td class="spacer"> # </td>
-            <td class="spacer"> # </td>
-            <td>
-              <input v-mask-box class="input" type="text" v-model="value.borderBottom" placeholder="-" />
+              <input v-mask-box class="input" type="text" v-model="target.paddingBottom" placeholder="-" />
             </td>
             <td class="spacer"> # </td>
             <td class="spacer"> # </td>
@@ -108,7 +94,21 @@
             <td class="spacer"> # </td>
             <td class="spacer"> # </td>
             <td>
-              <input v-mask-box class="input" type="text" v-model="value.marginBottom" placeholder="-" />
+              <input v-mask-box class="input" type="text" v-model="target.borderBottom" placeholder="-" />
+            </td>
+            <td class="spacer"> # </td>
+            <td class="spacer"> # </td>
+            <td class="spacer"> # </td>
+
+          </tr>
+
+          <tr>
+
+            <td class="spacer"> # </td>
+            <td class="spacer"> # </td>
+            <td class="spacer"> # </td>
+            <td>
+              <input v-mask-box class="input" type="text" v-model="target.marginBottom" placeholder="-" />
             </td>
             <td class="spacer"> # </td>
             <td class="spacer"> # </td>
@@ -130,13 +130,22 @@ export default {
   name: 'form-control-box',
 
   props: {
-    node: Object,
+    value: Object,
     property: Object
   },
 
   data () {
     return {
-      value: {}
+      target: (typeof this.value === 'object') ? this.value : {}
+    }
+  },
+
+  watch: {
+    target: {
+      handler: function (newValue, oldValue) {
+        this.$emit('input', newValue)
+      },
+      deep: true
     }
   },
 
@@ -176,9 +185,9 @@ export default {
 
     mask (node) {
       var model = node.data.directives.find(d => d.name == 'model').expression
-      model = model.replace('value.', '')
+      model = model.replace('target.', '')
 
-      var val = this.value[model]
+      var val = this.target[model]
       var suffix = 'px'
       var suffixes = ['%', 'px', 'pt', 'em', 'vw', 'vh', 'rem', 'ch', 'auto']
       suffixes.forEach(s => {
@@ -193,15 +202,15 @@ export default {
       if (suffix == 'auto') {
         val = suffix
       }
-      this.value[model] = val
+      this.target[model] = val
     }
   },
 
   mounted () {
-    this.value = this.node.data[this.property.name]
-    if (typeof this.value !== 'object') {
-      this.value = {}
-    }
+    // this.value = this.node.data[this.property.name]
+    // if (typeof this.value !== 'object') {
+      // this.value = {}
+    // }
     this.resizeBorders()
   },
 

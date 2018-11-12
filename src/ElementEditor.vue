@@ -14,7 +14,7 @@
           <b-tab-item v-for="(t, index) in sections" v-bind:key="index" :label="t.title" :visible="t.visible">
 
             <div v-for="(p, index) in properties" v-bind:key="index" v-if="p.section==t.name && !p.hide">
-              <component :ref="'editor-' + p.name" :is="p.component" :property="p" :node="node">
+              <component :ref="'editor-' + p.name" :is="p.component" :property="p" :node="node" v-model="node.data[p.name]">
               </component>
             </div>
 
@@ -23,7 +23,9 @@
         </b-tabs>
       </section>
       <footer class="modal-card-foot">
-        <div style="flex:1"></div>
+        <div style="flex:1">
+          {{node}}
+        </div>
         <div>
           <button class="button is-primary" @click="save()">
             <span class="icon"><i class="fa fa-check"></i></span>
@@ -72,28 +74,28 @@ export default {
 
   methods: {
     refreshControls () {
-      setTimeout(() => {
+      this.$nextTick(() => {
         Object.keys(this.$refs).forEach(k => {
           var ref = this.$refs[k][0]
           if (ref.refresh) {
             ref.refresh()
           }
         })
-      }, 0)
+      })
     },
 
     save () {
-      var data = Object.assign(this.node.data)
-      Object.keys(this.$refs).forEach(k => {
-        var ref = this.$refs[k][0]
-        if (!ref.property || !ref.property.name) {
-          return
-        }
-        data[ref.property.name] = ref.value
-      })
+      // var data = Object.assign(this.node.data)
+      // Object.keys(this.$refs).forEach(k => {
+      //   var ref = this.$refs[k][0]
+      //   if (!ref.property || !ref.property.name) {
+      //     return
+      //   }
+      //   data[ref.property.name] = ref.value
+      // })
       this.$store.commit('tree/setData', {
         target: this.node,
-        data: data
+        data: this.node.data
       })
       this.$emit('close')
     },
@@ -104,7 +106,7 @@ export default {
   },
 
   mounted () {
-    this.node = this.$store.state.tree.selected
+    this.node = JSON.parse(JSON.stringify(this.$store.state.tree.selected))
 
     var addProperties = properties => {
       properties.forEach(p => {

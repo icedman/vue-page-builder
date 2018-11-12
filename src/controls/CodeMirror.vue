@@ -4,7 +4,8 @@
       <div class="label form-label">{{property.title}}</div>
     </div>
     <div class="form-control">
-      <codemirror ref="codeEditor" :options="codeOptions" maxlength="200" type="textarea" v-model="value"></codemirror>
+      <codemirror ref="codeEditor" :options="codeOptions" maxlength="200" type="textarea"
+        v-model="target" @change="$emit('input', target)"></codemirror>
     </div>
   </div>
 </template>
@@ -14,13 +15,13 @@ export default {
   name: 'form-control-code',
 
   props: {
-    node: Object,
+    value: String,
     property: Object
   },
 
   data () {
     return {
-      value: '',
+      target: this.value,
       codeOptions: {
         mode: 'htmlmixed',
         lineNumbers: true
@@ -40,7 +41,6 @@ export default {
       this.codeOptions.mode = this.property.mode
       this.refresh()
     }
-    this.value = this.node.data[this.property.name]
   }
 }
 </script>

@@ -1,7 +1,7 @@
 <template>
     <div class="field">
-        <div>
-        <b-checkbox v-model="value">
+        <div>xx
+        <b-checkbox v-model="target" @input="$emit('input', target)">
             {{property.title}}
         </b-checkbox>
         </div>
@@ -13,18 +13,14 @@ export default {
   name: 'form-control-checkbox',
 
   props: {
-    node: Object,
+    value: Number,
     property: Object
   },
 
   data () {
     return {
-      value: ''
+      target: this.value ? 1 : 0
     }
-  },
-
-  mounted () {
-    this.value = this.node.data[this.property.name]
   }
 }
 </script>

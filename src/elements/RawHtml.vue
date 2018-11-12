@@ -7,18 +7,18 @@ let contentEditComponent = {
 
   template: `
     <div>
-    <codemirror :options="options" maxlength="200" type="textarea" v-model="value"></codemirror>
+    <codemirror :options="options" maxlength="200" type="textarea" v-model="target" @change="$emit('input', target)"></codemirror>
     </div>
     `,
 
   props: {
-    node: Object,
+    value: String,
     property: Object
   },
 
   data () {
     return {
-      value: '',
+      target: this.value,
       options: {
         mode: 'htmlmixed',
         lineNumbers: true

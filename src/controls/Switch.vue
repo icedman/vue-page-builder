@@ -2,7 +2,7 @@
   <div class="form-field">
     <div class="label form-label">{{property.title}}</div>
     <div class="form-control">
-      <b-switch v-model="value">
+      <b-switch v-model="target" @input="$emit('input', target)">
         {{property.values[value?0:1]}}
       </b-switch>
     </div>
@@ -14,18 +14,14 @@ export default {
   name: 'form-control-switch',
 
   props: {
-    node: Object,
+    value: Number,
     property: Object
   },
 
   data () {
     return {
-      value: ''
+      target: this.value
     }
-  },
-
-  mounted () {
-    this.value = this.node.data[this.property.name]
   }
 }
 </script>
