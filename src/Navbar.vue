@@ -79,20 +79,20 @@ export default {
           icon: 'fa fa-check',
           right: true
         },
-        {
-          cmd: () => {
-            this.$store.commit('tree/setSelected', null)
-            this.$modal.open({
-              parent: this,
-              component: ElementSelect,
-              hasModalCard: true,
-              canCancel: true
-            })
-          },
-          title: 'Save',
-          icon: 'fa fa-plus',
-          right: true
-        },
+        // {
+        //   cmd: () => {
+        //     this.$store.commit('tree/setSelected', null)
+        //     this.$modal.open({
+        //       parent: this,
+        //       component: ElementSelect,
+        //       hasModalCard: true,
+        //       canCancel: true
+        //     })
+        //   },
+        //   title: 'Save',
+        //   icon: 'fa fa-plus',
+        //   right: true
+        // },
         {
           name: 'live',
           cmd: () => {

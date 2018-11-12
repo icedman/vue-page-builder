@@ -14,13 +14,13 @@ export default {
   name: 'form-control-number',
 
   props: {
-    value: Number,
+    value: null,
     property: Object
   },
 
   data () {
     return {
-      target: this.value
+      target: Number(this.value)
     }
   }
 }

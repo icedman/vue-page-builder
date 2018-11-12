@@ -4,7 +4,7 @@
     <!-- action bar -->
     <div class="action-bar no-select action-bar-visible" :style="getActionBarPosition()">
 
-      <b-tooltip label="Add Container" type="is-warning">
+      <b-tooltip :label="getAddText()" type="is-warning">
         <button class="button is-primary is-small" title="" @click="addItem()">
           <span class="icon">
             <i class="fa fa-plus"></i>
@@ -229,6 +229,17 @@ export default {
       return 'Add Row'
     },
 
+    getAddText () {
+      var target = this.selected
+      if (!target) {
+        return
+      }
+      if (target.data && target.data.row) {
+        return 'Add Column'
+      }
+      return 'Add Row'
+    },
+
     getToggleIconClass () {
       var target = this.selected
       if (!target) {
@@ -279,6 +290,7 @@ export default {
         target: target,
         child: c
       })
+      this.$store.dispatch('tree/flash', c)
     },
 
     addItemAfter () {
@@ -295,6 +307,7 @@ export default {
         child: c,
         sibling: target
       })
+      this.$store.dispatch('tree/flash', c)
     },
 
     cloneItem () {

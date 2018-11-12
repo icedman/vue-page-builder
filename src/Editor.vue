@@ -2,39 +2,45 @@
   <div>
     <action-bar></action-bar>
 
-    <div id="root" :class="getEditorClass">
+    <div class="columns">
+      <div id="root" class="column" :class="getEditorClass">
 
-      <component :is="'tree-node'" :node="root" style="border:0px"></component>
+        <component :is="'tree-node'" :node="root" style="border:0px"></component>
 
-      <div class="container" style="margin: auto; margin-top: 40px; padding:40px; text-align: center; border-top: 1px dashed #a0a0a0">
-        <a class="add-button" @click="addColumn(0)"><img src="static/icons/1-column.svg" /></a>
-        <a class="add-button" @click="addColumn(2)"><img src="static/icons/2-column.svg" /></a>
-        <a class="add-button" @click="addColumn(3)"><img src="static/icons/3-column.svg" /></a>
-        <a class="add-button" @click="addColumn(4)"><img src="static/icons/4-column.svg" /></a>
-        <a class="add-button" @click="addColumn(5)"><img src="static/icons/5-column.svg" /></a>
-        <a class="add-button" @click="addTextBlock()"><img src="static/icons/text-block.svg" /></a>
-        <!--
-      <a class="add-button" @click="addColumn(5)"><img src="static/icons/element.svg"/></a>
-      <a class="add-button" @click="addColumn(5)"><img src="static/icons/custom.svg"/></a>
-       -->
+        <div class="container"
+          style="margin: auto; margin-top: 40px; padding:40px; text-align: center; border-top: 1px dashed #a0a0a0">
+          <a class="add-button" @click="addColumn(0)"><img src="static/icons/1-column.svg" /></a>
+          <a class="add-button" @click="addColumn(2)"><img src="static/icons/2-column.svg" /></a>
+          <a class="add-button" @click="addColumn(3)"><img src="static/icons/3-column.svg" /></a>
+          <a class="add-button" @click="addColumn(4)"><img src="static/icons/4-column.svg" /></a>
+          <a class="add-button" @click="addColumn(5)"><img src="static/icons/5-column.svg" /></a>
+          <a class="add-button" @click="addTextBlock()"><img src="static/icons/text-block.svg" /></a>
+          <!--
+        <a class="add-button" @click="addColumn(5)"><img src="static/icons/element.svg"/></a>
+        <a class="add-button" @click="addColumn(5)"><img src="static/icons/custom.svg"/></a>
+         -->
+        </div>
+
+        <pre>
+        {{$store.state.tree}}
+        </pre>
+        
+        <canvas id="dragCanvas" width="120px" height="60px" style="position: absolute; top:-100px; left:-100px"></canvas>
+        <img id="dragImage" style="position: absolute; top:-100px; left:-100px" src="static/icons/1-column.svg" />
+
       </div>
 
-      <pre>
-      {{$store.state.tree}}
-      </pre>
-      
-      <canvas id="dragCanvas" width="120px" height="60px" style="position: absolute; top:-100px; left:-100px"></canvas>
-      <img id="dragImage" style="position: absolute; top:-100px; left:-100px" src="static/icons/1-column.svg" />
+      <div class="column">
+        <component is="inspector"></component>
+      </div>
 
     </div>
-
-  </div>
-
   </div>
 </template>
 
 <script>
 import ActionBar from './ActionBar'
+import Inspector from './Inspector'
 import TreeNode from './TreeNode'
 
 export default {
@@ -82,6 +88,7 @@ export default {
     addColumn (count) {
       var target = this.$store.state.tree.root
       var row = this.$tree.createNode()
+      var column = null
       row.data = {
         row: true
       }
@@ -90,6 +97,7 @@ export default {
         c.data = {
           flex: 1
         }
+        column = c
         row.appendChild(c)
       }
       // target.appendChild(row);
@@ -97,22 +105,27 @@ export default {
         target: target,
         child: row
       })
-      this.$store.dispatch('tree/flash', target)
+      this.$store.dispatch('tree/flash', row)
       this.$store.commit('tree/setSelected', null)
+
+      return column
     },
 
     addTextBlock () {
+      var blockType = 'text-block'
+      var element = this.$elements.getByName(blockType)
+      if (!element) {
+        return
+      }
+
       var target = this.$store.state.tree.root
       var row = this.$tree.createNode()
-      row.data = {
-        flex: 1,
-        element: 'text-block'
-      }
+      row.data = Object.assign({ flex:1, element: blockType }, this.$elements.getDefaults(blockType))
       this.$store.commit('tree/appendChild', {
         target: target,
         child: row
       })
-      this.$store.dispatch('tree/flash', target)
+      this.$store.dispatch('tree/flash', row)
       this.$store.commit('tree/setSelected', null)
     },
 
@@ -137,7 +150,8 @@ export default {
 
   components: {
     'tree-node': TreeNode,
-    'action-bar': ActionBar
+    'action-bar': ActionBar,
+    'inspector': Inspector
   }
 }
 </script>

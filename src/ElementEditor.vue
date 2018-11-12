@@ -1,20 +1,18 @@
 <template>
   <div>
-    <div class="modal-card modal-editor">
+    <div class="modal-card modal-editor" v-if="node">
       <header class="modal-card-head">
         <div style="flex:1">
-          <h2>
             <p class="modal-card-title">{{title}}</p>
-          </h2>
         </div>
         <!-- <a @click="close()"><i class="fa fa-times"></i></a> -->
       </header>
       <section class="modal-card-body modal-editor-body" style="min-height: 60vh">
-        <b-tabs class="block" v-model="activeTab" @input="refreshControls">
+        <b-tabs class="block" v-model="activeTab">
           <b-tab-item v-for="(t, index) in sections" v-bind:key="index" :label="t.title" :visible="t.visible">
 
             <div v-for="(p, index) in properties" v-bind:key="index" v-if="p.section==t.name && !p.hide">
-              <component :ref="'editor-' + p.name" :is="p.component" :property="p" :node="node" v-model="node.data[p.name]">
+              <component :ref="'editor-' + p.name" :is="p.component" :property="p" v-model="node.data[p.name]">
               </component>
             </div>
 
@@ -24,7 +22,6 @@
       </section>
       <footer class="modal-card-foot">
         <div style="flex:1">
-          {{node}}
         </div>
         <div>
           <button class="button is-primary" @click="save()">
@@ -73,26 +70,7 @@ export default {
   },
 
   methods: {
-    refreshControls () {
-      this.$nextTick(() => {
-        Object.keys(this.$refs).forEach(k => {
-          var ref = this.$refs[k][0]
-          if (ref.refresh) {
-            ref.refresh()
-          }
-        })
-      })
-    },
-
     save () {
-      // var data = Object.assign(this.node.data)
-      // Object.keys(this.$refs).forEach(k => {
-      //   var ref = this.$refs[k][0]
-      //   if (!ref.property || !ref.property.name) {
-      //     return
-      //   }
-      //   data[ref.property.name] = ref.value
-      // })
       this.$store.commit('tree/setData', {
         target: this.node,
         data: this.node.data
@@ -197,7 +175,6 @@ export default {
     }
 
     this.$store.commit('tree/setSelected', null)
-    window.$editor = this
   },
 
   components: {

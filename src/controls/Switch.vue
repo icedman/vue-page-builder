@@ -14,13 +14,13 @@ export default {
   name: 'form-control-switch',
 
   props: {
-    value: Number,
+    value: null,
     property: Object
   },
 
   data () {
     return {
-      target: this.value
+      target: this.value ? true : false
     }
   }
 }

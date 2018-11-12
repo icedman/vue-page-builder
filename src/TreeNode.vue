@@ -1,5 +1,5 @@
 <template>
-  <div class="node" :id="getId()" :class="getContainerClass()" :style="getContainerStyle()" :draggable="draggable" @dragover="canDrop($event, node)" @drop="drop($event, node)" @drag="drag($event, node)" @dragstart="dragStart($event, node)" @dragend="dragEnd($event, node)" @click="select($event, node)" @mouseover="hover($event, node)">
+  <div class="node" :id="getId()" :class="getContainerClass()" :style="getContainerStyle()" :draggable="draggable" @dragover="canDrop($event, node)" @drop="drop($event, node)" @drag="drag($event, node)" @dragstart="dragStart($event, node)" @dragend="dragEnd($event, node)" @click="selectNow($event, node)" @mouseover="hover($event, node)">
     <component :is="nodeElement" :node="node"></component>
     <tree-node v-for="c in children" v-bind:key="c.id" :node="c">
     </tree-node>
@@ -179,6 +179,12 @@ export default {
       this._select(this, target)
     },
 
+    selectNow (event, target) {
+      event.preventDefault()
+      event.stopPropagation()
+      this.$store.commit('tree/setSelected',target)
+    },
+
     hover (event, target) {
       event.preventDefault()
       event.stopPropagation()
@@ -187,10 +193,13 @@ export default {
         return
       }
 
+      // disable hovering
+      return
+
       this.$store.commit('tree/setHovered', this.node)
-      if (this.$store.state.tree.selected != this.node) {
-        this.$store.commit('tree/setSelected', null)
-      }
+      // if (this.$store.state.tree.selected != this.node) {
+      //   this.$store.commit('tree/setSelected', null)
+      // }
 
       setTimeout(() => {
         if (
@@ -200,7 +209,7 @@ export default {
         ) {
           this.$store.commit('tree/setSelected', this.node)
         }
-      }, 200)
+      }, 1500)
     },
 
     _clearFlash: _.debounce(self => {

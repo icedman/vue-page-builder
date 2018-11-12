@@ -2,12 +2,12 @@
   <div v-html="content"></div>
 </template>
 <script>
-let contentEditComponent = {
+let contentCodeComponent = {
   name: 'raw-html-editor',
 
   template: `
     <div>
-    <codemirror :options="options" maxlength="200" type="textarea" v-model="target" @change="$emit('input', target)"></codemirror>
+    <codemirror ref="codeEditor" :options="options" maxlength="200" type="textarea" v-model="target" @change="$emit('input', target)"></codemirror>
     </div>
     `,
 
@@ -18,6 +18,7 @@ let contentEditComponent = {
 
   data () {
     return {
+      showEditor: false,
       target: this.value,
       options: {
         mode: 'htmlmixed',
@@ -28,7 +29,9 @@ let contentEditComponent = {
 
   mounted () {
     setTimeout(() => {
-      this.value = this.node.data[this.property.name]
+      if (this.$refs.codeEditor && this.$refs.codeEditor.editor) {
+        this.$refs.codeEditor.editor.refresh()
+      }
     }, 0)
   }
 }
@@ -44,7 +47,7 @@ export default {
         name: 'content',
         section: 'content',
         default: '<b>Raw Html</b><p>Lorem Ipsum</p>',
-        component: contentEditComponent
+        component: contentCodeComponent
       }
     ]
   },
@@ -64,9 +67,7 @@ export default {
       }
       return ''
     }
-  },
-
-  mounted () {}
+  }
 }
 </script>
 <style>

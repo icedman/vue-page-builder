@@ -13,13 +13,13 @@ export default {
   name: 'form-control-checkbox',
 
   props: {
-    value: Number,
+    value: null,
     property: Object
   },
 
   data () {
     return {
-      target: this.value ? 1 : 0
+      target: this.value ? true : false
     }
   }
 }

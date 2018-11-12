@@ -7,32 +7,34 @@ let contentEditComponent = {
 
   template: `
     <div>
-    <b-tabs @input="refreshCodeEditor" type="is-toggle is-small" position="is-centered" class="block">
+    <b-tabs v-model="tabIndex" type="is-toggle is-small" position="is-centered" class="xblock">
+      <b-tab-item label="HTML"></b-tab-item>
+      <b-tab-item label="Code"></b-tab-item>
+    </b-tabs>
 
-    <b-tab-item label="HTML">
-    <editor-tinymce 
+    <editor-tinymce ref="htmlEditor"
+        v-show="tabIndex==0"
         :id="'editor-tinymce' + property.name"
         :other_options="tinyOptions"
-        v-model="value">
+        v-model="target"
+        @input="$emit('input', target)"
+        >
     </editor-tinymce>
-    </b-tab-item>
-    
-    <b-tab-item label="Code">
-    <codemirror ref="codeEditor" :options="codeOptions" maxlength="200" type="textarea" v-model="value"></codemirror>
-    </b-tab-item>
 
-    </b-tabs>
+    <codemirror ref="codeEditor" v-if="tabIndex==1" :options="codeOptions" maxlength="200" type="textarea" v-model="target" @change="$emit('input', target)"></codemirror>
+
     </div>
     `,
 
   props: {
-    node: Object,
+    value: String,
     property: Object
   },
 
   data () {
     return {
-      value: '',
+      tabIndex: 0,
+      target: this.value,
       showCode: false,
       tinyOptions: {
         menubar: false,
@@ -45,17 +47,14 @@ let contentEditComponent = {
     }
   },
 
-  methods: {
-    refreshCodeEditor (idx) {
-      setTimeout(() => {
-        this.$refs.codeEditor.editor.refresh()
-      }, 0)
-    }
-  },
-
   mounted () {
     setTimeout(() => {
-      this.value = this.node.data[this.property.name]
+      if (this.$refs.htmlEditor && this.$refs.htmlEditor.editor) {
+        this.$refs.htmlEditor.editor.render()
+      }
+      if (this.$refs.codeEditor && this.$refs.codeEditor.editor) {
+        this.$refs.codeEditor.editor.refresh()
+      }
     }, 0)
   }
 }

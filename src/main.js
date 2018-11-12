@@ -23,7 +23,29 @@ Vue.prototype.$tree = Tree
 // --------------
 // basic elements
 // --------------
-Vue.prototype.$elements = {}
+Vue.prototype.$elements = {
+    getByName: (name) => {
+        var self = Vue.prototype.$elements
+        return self[name]
+    },
+
+    getDefaults: (name) => {
+        var self = Vue.prototype.$elements
+        var element = self[name]
+        if (!element) {
+            return null
+        }
+
+        var res = {}
+        element.element.properties.forEach(prop => {
+            if (prop.default) {
+                res[prop.name] = prop.default
+            }
+        })
+        return res
+    }
+}
+
 Vue.prototype.$registerElement = component => {
   Vue.prototype.$elements[component.name] = component
   Vue.component(component.name, component)
