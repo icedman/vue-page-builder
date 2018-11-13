@@ -47,7 +47,8 @@ export default {
         name: 'content',
         section: 'content',
         default: '<b>Raw Html</b><p>Lorem Ipsum</p>',
-        component: contentCodeComponent
+        component: contentCodeComponent,
+        'componentMini': 'div'
       }
     ]
   },

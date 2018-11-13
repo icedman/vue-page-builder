@@ -57,7 +57,11 @@ let actions = {
   }
 }
 
-let getters = {}
+let getters = {
+  selected: (state) => {
+    return state.selected
+  }
+};
 
 let mutations = {
 

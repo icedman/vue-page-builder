@@ -2,6 +2,9 @@
   <div>
     <action-bar></action-bar>
 
+      <canvas id="dragCanvas" width="120px" height="60px" style="position: absolute; top:-100px; left:-100px"></canvas>
+      <img id="dragImage" style="position: absolute; top:-100px; left:-100px" src="static/icons/1-column.svg" />
+
     <div class="columns">
       <div id="root" class="column" :class="getEditorClass">
 
@@ -25,9 +28,6 @@
         {{$store.state.tree}}
         </pre>
         
-        <canvas id="dragCanvas" width="120px" height="60px" style="position: absolute; top:-100px; left:-100px"></canvas>
-        <img id="dragImage" style="position: absolute; top:-100px; left:-100px" src="static/icons/1-column.svg" />
-
       </div>
 
       <div class="column">

@@ -1,10 +1,19 @@
 <template>
-  <div style="zoom:0.8">
-    {{node}}
-    <div class="b-p-b-15" v-for="(p, index) in properties" v-bind:key="index" v-if="node && node.data">
-      <component :ref="'editor-' + p.name" :is="p.component" :property="p" v-model="node.data[p.name]">
-      </component>
+  <div>
+    <div class="message is-info b-p-20 b-m-r-10" v-if="!node">
+      No block selected
     </div>
+    <b-tabs type="is-toggle is-small" position="is-centered" class="xblock" v-if="node && node.data">
+    <b-tab-item v-for="(t, index) in sections" v-bind:key="index" :label="t.title">
+
+      <div v-for="(p, index) in properties" v-bind:key="index">
+      <component class="b-p-b-15" v-if="p.section==t.name && !p.hide"
+          :is="p.componentMini || p.component" :property="p" v-model="node.data[p.name]">
+      </component>
+      </div>
+
+    </b-tab-item>
+    </b-tabs>
   </div>
 </template>
 <script>
@@ -15,6 +24,7 @@ import {
   InputNumber,
   InputText,
   InputBox,
+  InputBoxMini,
   Select,
   CodeMirror
 } from './controls/'
@@ -33,11 +43,23 @@ export default {
     }
   },
 
+  computed: {
+    sections () {
+      return Object.keys(this.tabs).map(k => {
+        this.tabs[k].name = k
+        return this.tabs[k]
+      })
+    }
+  },
+
   watch: {
     value: {
       handler: function (newValue, oldValue) {
-        this.node = newValue
-        this.buildProperties ()
+        this.node = {}
+        this.$nextTick(() =>{
+          this.node = newValue
+          this.buildProperties()
+        })
       }
     }
   },
@@ -60,8 +82,8 @@ export default {
             }
 
             this.properties.push(
-              Object.assign(p, {
-                component: component.name
+              Object.assign(JSON.parse(JSON.stringify(p)), {
+                component: component.name.includes('box') ? 'form-control-box-mini' : component.name
               })
             )
           })
@@ -106,6 +128,7 @@ export default {
     'form-control-number': InputNumber,
     'form-control-text': InputText,
     'form-control-box': InputBox,
+    'form-control-box-mini': InputBoxMini,
     'form-control-select': Select,
     'form-control-code': CodeMirror
   }

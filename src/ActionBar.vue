@@ -2,7 +2,7 @@
   <div ref="actionBox">
 
     <!-- action bar -->
-    <div class="action-bar no-select action-bar-visible" :style="getActionBarPosition()">
+    <div id="node_action_bar" class="action-bar no-select action-bar-visible" :style="getActionBarPosition()">
 
       <b-tooltip :label="getAddText()" type="is-warning">
         <button class="button is-primary is-small" title="" @click="addItem()">
@@ -54,7 +54,7 @@
 
     <!-- add bar -->
     <div class="add-bar-container" :style="getAddBarPosition()">
-      <div class="add-bar">
+      <div id="node_action_bar_plus" class="add-bar">
 
         <b-tooltip :label="getAddAfterText()" type="is-warning">
           <button class="button is-primary is-small" @click="addItemAfter()">

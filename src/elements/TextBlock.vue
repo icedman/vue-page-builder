@@ -10,8 +10,6 @@ let contentEditComponent = {
     <b-tabs v-model="tabIndex" type="is-toggle is-small" position="is-centered" class="xblock">
       <b-tab-item label="HTML"></b-tab-item>
       <b-tab-item label="Code"></b-tab-item>
-    </b-tabs>
-
     <editor-tinymce ref="htmlEditor"
         v-show="tabIndex==0"
         :id="'editor-tinymce' + property.name"
@@ -23,6 +21,7 @@ let contentEditComponent = {
 
     <codemirror ref="codeEditor" v-if="tabIndex==1" :options="codeOptions" maxlength="200" type="textarea" v-model="target" @change="$emit('input', target)"></codemirror>
 
+    </b-tabs>
     </div>
     `,
 
@@ -74,7 +73,8 @@ export default {
         name: 'content',
         section: 'content',
         default: '<b>Text Block</b><p>Lorem Ipsum</p>',
-        component: contentEditComponent
+        component: contentEditComponent,
+        'componentMini': 'div'
       }
     ]
   },

@@ -52,6 +52,7 @@ String.prototype.hashCode = function () {
 export default {
   data () {
     return {
+      unsubscribe: null,
       menuActive: false,
       history: [],
       menuItems: [
@@ -159,7 +160,6 @@ export default {
       if (treeState) {
         this.$store.commit('tree/setRoot', treeState)
       }
-
       // make sure we keep copy of initial state
       if (this.history.length == 0) {
         this.history.push(state)
@@ -167,8 +167,12 @@ export default {
     }
   },
 
+  beforeDestroy () {
+    this.unsubscribe()
+  },
+
   created () {
-    this.$store.subscribe(mutation => {
+    this.unsubscribe = this.$store.subscribe(mutation => {
       if (!this.$store.state.tree.history) {
         return
       }
@@ -190,12 +194,16 @@ export default {
           return
         }
       }
+
+      // cap history length??
+      while (this.history.length > 20) {
+        this.history.shift()
+      }
+
       this.history.push({
         state: treeState,
         hash: hash
       })
-
-      // cap history length??
     })
   },
 

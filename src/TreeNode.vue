@@ -145,16 +145,28 @@ export default {
     },
 
     dragStart (event, target) {
+      var action = document.querySelector('#node_action_bar')
+      action.style.display = "none"
+
+      var action_plus = document.querySelector('#node_action_bar_plus')
+      action_plus.style.display = "none"
+
+      setTimeout(() => {
+        action.style.display = ""
+        action_plus.style.display = ""
+      }, 500)
+
       // var img = document.getElementById("dragImage");
       // img.src = 'static/icons/1-column.svg';
 
-      var img = document.getElementById('dragCanvas')
-      var ctx = img.getContext('2d')
+      // var img = document.getElementById('dragCanvas')
+      // var ctx = img.getContext('2d')
       // ctx.rect(4,4,112,52);
       // ctx.stroke();
-      img.style.display = 'block'
 
-      event.dataTransfer.setDragImage(img, 10, 10)
+      // img.style.display = 'block'
+
+      // event.dataTransfer.setDragImage(img, 10, 10)
     },
 
     drag (event, target) {
@@ -170,7 +182,7 @@ export default {
       this.$store.commit('tree/setDrop', null)
       setTimeout(() => {
         this.$store.commit('tree/setSelected', null)
-      }, 500)
+      }, 150)
     },
 
     select (event, target) {
@@ -382,7 +394,8 @@ $borderStyle: dotted;
 
 .dragItem {
   opacity: 0.5;
-  border-color: skyblue;
+  --border-color: skyblue;
+  border-color: red;
 }
 
 .dropTarget {
