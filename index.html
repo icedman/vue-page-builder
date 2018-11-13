@@ -13,4 +13,144 @@
     <script src="/static/tinymce/tinymce-vue.js"></script>
     <script src="/dist/build.js"></script>
   </body>
+
+  <template id="famous">
+  <h1>Famous post</h1>
+  <!-- wp:component {attributes: "as JSON"} -->
+  lorem ipsum
+  <!-- /wp:component -->
+  </template>
+
+  <template id="sample">
+<!-- wp:paragraph -->
+<p>Welcome to WordPress. 123This is your first post. Edit or delete it, then start writing!</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:latest-comments {"className":"cc"} /-->
+
+<!-- wp:columns {"columns":4} -->
+<div class="wp-block-columns has-4-columns"><!-- wp:column -->
+<div class="wp-block-column"><!-- wp:paragraph -->
+<p>qbcd</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:column -->
+
+<!-- wp:column -->
+<div class="wp-block-column"><!-- wp:paragraph -->
+<p>&nbsp;</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:column -->
+
+<!-- wp:column -->
+<div class="wp-block-column"><!-- wp:paragraph {"customFontSize":32} -->
+<p style="font-size: 32px;">ccc</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:column -->
+
+<!-- wp:column -->
+<div class="wp-block-column"><!-- wp:heading {"align":"left","className":"moreCss"} -->
+<h2 class="moreCss" style="text-align: left;"><em>xxx</em></h2>
+<!-- /wp:heading --></div>
+<!-- /wp:column --></div>
+<!-- /wp:columns -->
+
+<!-- wp:columns -->
+<div class="wp-block-columns has-2-columns"><!-- wp:column -->
+<div class="wp-block-column"><!-- wp:paragraph -->
+<p>erg</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:column -->
+
+<!-- wp:column -->
+<div class="wp-block-column"><!-- wp:paragraph -->
+<p>yyy</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:column --></div>
+<!-- /wp:columns -->
+
+<!-- wp:shortcode -->
+<p>[acf field="sample"]</p>
+<!-- /wp:shortcode -->
+
+<!-- wp:paragraph -->
+<p>zzzzz</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:gallery {"className":"cc"} -->
+<ul class="wp-block-gallery columns-2 is-cropped cc">
+<li class="blocks-gallery-item">
+<figure><img class="wp-image-81" src="http://wp5.localhost/wp-content/uploads/2018/11/bg6.jpg" alt="" data-id="81" data-link="http://wp5.localhost/2018/11/09/hello-world/bg6/" /></figure>
+</li>
+<li class="blocks-gallery-item">
+<figure><img class="wp-image-82" src="http://wp5.localhost/wp-content/uploads/2018/11/bg7.jpg" alt="" data-id="82" data-link="http://wp5.localhost/2018/11/09/hello-world/bg7/" /></figure>
+</li>
+</ul>
+<!-- /wp:gallery -->
+
+<!-- wp:heading -->
+<h2>hello</h2>
+<!-- /wp:heading -->
+
+<!-- wp:button {"className":"is-primary"} -->
+<div class="wp-block-button is-primary"><a class="wp-block-button__link" href="http://google.com"><em>Some kind of Button</em></a></div>
+<!-- /wp:button -->
+
+<!-- wp:paragraph {"className":"is-primary"} -->
+<p class="is-primary"> </p>
+<!-- /wp:paragraph -->
+  </template>
+
+<template id="xx">    
+<!-- wp:box {"element":"text-block","content":""} -->
+<!-- wp:paragraph {"blockType":"paragraph","flex":1,"content":"","element":"text-block"} -->
+<p>Welcome to WordPress. 123This is your first post. Edit or delete it, then start writing!</p><!-- /wp:paragraph -->
+
+<!-- wp:latest-comments {"className":"cc","blockType":"latest-comments","flex":1,"content":"","element":"text-block"} -->
+<!-- /wp:latest-comments -->
+
+<!-- wp:columns {"columns":4,"blockType":"columns","flex":1,"element":"text-block","row":true,"content":""} -->
+<!-- wp:paragraph {"blockType":"paragraph","flex":1,"element":"text-block","content":""} -->
+<p>qbcd</p><!-- /wp:paragraph -->
+
+<!-- wp:paragraph {"blockType":"paragraph","flex":1,"element":"text-block","content":""} -->
+<p>&nbsp;</p><!-- /wp:paragraph -->
+
+<!-- wp:paragraph {"blockType":"paragraph","flex":1,"element":"text-block","customFontSize":32,"content":""} -->
+<p style="font-size: 32px;">ccc</p><!-- /wp:paragraph -->
+
+<!-- wp:heading {"blockType":"heading","flex":1,"element":"heading-block","align":"left","className":"moreCss","content":""} -->
+<em>xxx</em><!-- /wp:heading -->
+
+<!-- /wp:columns -->
+
+<!-- wp:columns {"blockType":"columns","flex":1,"element":"text-block","row":true,"content":""} -->
+<!-- wp:paragraph {"blockType":"paragraph","flex":1,"element":"text-block","content":""} -->
+<p>erg</p><!-- /wp:paragraph -->
+
+<!-- wp:paragraph {"blockType":"paragraph","flex":1,"element":"text-block","content":""} -->
+<p>yyy</p><!-- /wp:paragraph -->
+
+<!-- /wp:columns -->
+
+<!-- wp:shortcode {"blockType":"shortcode","flex":1,"content":"","element":"text-block"} -->
+<p>[acf field="sample"]</p><!-- /wp:shortcode -->
+
+<!-- wp:paragraph {"blockType":"paragraph","flex":1,"content":"","element":"text-block"} -->
+<p>zzzzz</p><!-- /wp:paragraph -->
+
+<!-- wp:box {"flex":1,"content":""} -->
+<!-- /wp:box -->
+
+<!-- wp:heading {"blockType":"heading","flex":1,"content":"","element":"heading-block"} -->
+hello<!-- /wp:heading -->
+
+<!-- wp:button {"className":"is-primary","blockType":"button","flex":1,"content":"","element":"button-block"} -->
+<em>Some kind of Button</em><!-- /wp:button -->
+
+<!-- wp:paragraph {"className":"is-primary","blockType":"paragraph","flex":1,"content":"","element":"text-block"} -->
+<p class="is-primary">&nbsp;</p><!-- /wp:paragraph -->
+
+<!-- /wp:box -->
+</template>
+
 </html>

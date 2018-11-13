@@ -37,7 +37,7 @@ let contentCodeComponent = {
 }
 
 export default {
-  name: 'raw-html',
+  name: 'raw-html-block',
 
   element: {
     title: 'Raw HTML',

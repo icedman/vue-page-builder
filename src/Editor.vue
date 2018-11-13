@@ -24,7 +24,7 @@
          -->
         </div>
 
-        <pre>
+        <pre style="max-width:80vw">
         {{$store.state.tree}}
         </pre>
         

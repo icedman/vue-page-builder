@@ -1,5 +1,7 @@
 <template>
-  <button class="button is-primary">{{content}}</button>
+  <div>
+  <button class="button is-primary" v-html="content"></button>
+  </div>
 </template>
 <script>
 export default {

@@ -1,9 +1,9 @@
 <template>
-  <component :is="tag" :class="getHeadingClass()">{{content}}</component>
+  <component :is="tag" :class="getHeadingClass()" v-html="content"></component>
 </template>
 <script>
 export default {
-  name: 'heading',
+  name: 'heading-block',
 
   element: {
     title: 'Heading',

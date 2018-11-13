@@ -10,6 +10,7 @@ import Heading from './elements/Heading'
 import Image from './elements/Image'
 import Button from './elements/Button'
 import { codemirror } from 'vue-codemirror-lite'
+import Blocks from './libs/blocks.js'
 
 Vue.use(Buefy)
 Vue.component('editor-tinymce', TinymceVue.default)
@@ -18,7 +19,9 @@ Vue.component('codemirror', codemirror)
 require('codemirror/mode/htmlmixed/htmlmixed')
 require('codemirror/mode/css/css')
 
+
 Vue.prototype.$tree = Tree
+Vue.prototype.$blocks = Blocks
 
 // --------------
 // basic elements

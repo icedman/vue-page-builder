@@ -1,4 +1,4 @@
-module.exports = class Tree {
+export default class Tree {
   constructor (name, data) {
     this.id = Tree.generateId()
     this.name = name || ''
@@ -7,8 +7,8 @@ module.exports = class Tree {
     this.data = data || null
   }
 
-  static createNode (name) {
-    return new Tree(name)
+  static createNode (name, data) {
+    return new Tree(name, data)
   }
 
   static cloneData (data) {
