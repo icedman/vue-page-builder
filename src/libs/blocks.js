@@ -18,13 +18,17 @@ class Parser {
   }
 
   parseDOMNode(domNode) {
+    if (typeof domNode === 'string') {
+        var t = document.createElement('template')
+        t.innerHTML = domNode
+        domNode = t.content
+    }
     var topNode = this.top();
     topNode.data = topNode.data || {};
 
-    var targetNode = null;
-
     // children
     Array.prototype.forEach.call(domNode.childNodes, c => {
+      topNode = this.top();
       if (c.nodeType === document.COMMENT_NODE) {
         var str = c.textContent.trim();
         if (str.startsWith("wp:")) {
@@ -54,19 +58,19 @@ class Parser {
           topNode.appendChild(cc);
           this.push(cc);
 
-          targetNode = cc;
+          topNode = cc;
         }
 
         if (str.startsWith("/wp:")) {
-          targetNode = null;
+          topNode = topNode;
           this.pop();
           return;
         }
       }
 
-      if (c.nodeType !== document.COMMENT_NODE && targetNode) {
-        targetNode.data.content = targetNode.data.content || "";
-        targetNode.data.content += c.outerHTML || "";
+      if (c.nodeType !== document.COMMENT_NODE) {
+        if (!topNode.data.content && c.outerHTML)
+            topNode.data.content = c.outerHTML;
       }
 
       this.parseDOMNode(c);
@@ -152,6 +156,11 @@ class Writer {
 
     var data = node.data || {};
     var element = data.blockType || "box";
+
+    if (node.name === 'columns') {
+        element = 'box'
+    }
+
     var attrs = JSON.parse(JSON.stringify(data || {}));
     attrs.content = "";
     var jattrs = JSON.stringify(attrs);
@@ -165,12 +174,13 @@ class Writer {
       this.out += `\n`;
     }
 
-    this.out += `<!-- /wp:${element} -->\n`;
+    this.out += `\n<!-- /wp:${element} -->\n`;
   }
 
   write(root) {
     this.out = "";
-    this.writeNode(root);
+    root.children.forEach(n => this.writeNode(n))
+    // this.writeNode(root);
     return this.out;
   }
 }
